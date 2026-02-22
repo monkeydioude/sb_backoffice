@@ -9,7 +9,7 @@ import Users from './pages/users/page';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/sb_backoffice">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/organizations" element={<Organizations />} />
