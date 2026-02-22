@@ -1,67 +1,65 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
 import { MainLayout } from "@/components/layout/main-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "@/components/ui/table"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { 
-  Building2, 
-  Search,
-  Plus,
-  MoreVertical,
-  Edit,
-  Trash2,
-  Users,
-  CheckCircle,
-  XCircle,
-  Euro
-} from "lucide-react"
-import { Organization, Plan, SubscriptionType, User, getFullName } from "@/types"
-import { formatPlan, getPlanBadgeStyle } from "@/lib/plans"
-import { calculateMRR } from "@/types"
-import { Switch } from "@/components/ui/switch"
-import { 
-  getAllOrganizations, 
-  createOrganization, 
-  updateOrganization 
+    createOrganization,
+    getAllOrganizations,
+    updateOrganization
 } from "@/lib/api"
-import { useEffect } from "react"
+import { formatPlan, getPlanBadgeStyle } from "@/lib/plans"
+import { Organization, Plan, SubscriptionType, User, calculateMRR, getFullName } from "@/types"
+import {
+    Building2,
+    CheckCircle,
+    Edit,
+    Euro,
+    MoreVertical,
+    Plus,
+    Search,
+    Trash2,
+    Users,
+    XCircle
+} from "lucide-react"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { toast } from "sonner"
 
 export default function OrganizationsPage() {
   const [organizations, setOrganizations] = useState<Organization[]>([])
@@ -91,7 +89,7 @@ export default function OrganizationsPage() {
     firstName: "",
     lastName: "",
     email: "",
-    status: "active" as const,
+    status: "active" as "active" | "inactive",
   })
 
   // Charger les organisations au montage du composant
@@ -354,7 +352,7 @@ export default function OrganizationsPage() {
                         </div>
                         <div>
                           <Link 
-                            href={`/organizations/${org.id}`}
+                            to={`/organizations/${org.id}`}
                             className="font-medium hover:underline"
                           >
                             {org.name}
@@ -426,7 +424,7 @@ export default function OrganizationsPage() {
                             Modifier
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
-                            <Link href={`/organizations/${org.id}`} className="flex items-center">
+                            <Link to={`/organizations/${org.id}`} className="flex items-center">
                               <Users className="w-4 h-4 mr-2" />
                               Voir les détails
                             </Link>
@@ -539,7 +537,7 @@ export default function OrganizationsPage() {
                 onValueChange={(value) =>
                   setNewOrg({
                     ...newOrg,
-                    status: value as "active" | "inactive",
+                    status: value as "active",
                   })
                 }
               >
@@ -609,7 +607,7 @@ export default function OrganizationsPage() {
                       onValueChange={(value) =>
                         setNewUser({
                           ...newUser,
-                          status: value as "active" | "inactive" | "pending",
+                          status: value as "active",
                         })
                       }
                     >

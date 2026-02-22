@@ -1,64 +1,63 @@
 "use client"
 
-import { useState } from "react"
 import { MainLayout } from "@/components/layout/main-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { createUser, getAllOrganizations, getAllUsers, updateUser } from "@/lib/api"
+import { getPlanBadgeStyle } from "@/lib/plans"
+import { Plan, User, getFullName } from "@/types"
 import {
-  Users,
-  Search,
-  Plus,
-  MoreVertical,
-  Edit,
-  Trash2,
-  Building2,
-  CheckCircle,
-  XCircle,
-  Clock,
-  LogIn,
+    Building2,
+    CheckCircle,
+    Clock,
+    Edit,
+    LogIn,
+    MoreVertical,
+    Plus,
+    Search,
+    Trash2,
+    Users,
+    XCircle,
 } from "lucide-react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { User, Plan, getFullName } from "@/types"
-import { formatPlan, getPlanBadgeStyle } from "@/lib/plans"
-import { getAllUsers, createUser, updateUser, getAllOrganizations } from "@/lib/api"
-import { useEffect } from "react"
 
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([])
@@ -80,7 +79,7 @@ export default function UsersPage() {
     email: "",
     company: "",
     plan: "Free" as Plan,
-    status: "active" as const,
+    status: "active" as "active" | "inactive" | "pending",
   })
 
   // Charger les utilisateurs au montage du composant
@@ -670,7 +669,8 @@ export default function UsersPage() {
               onClick={() => {
                 setShowNewUserDialog(false)
                 setNewUser({
-                  name: "",
+                  firstName: "",
+                  lastName: "",
                   email: "",
                   company: "",
                   plan: "Free",

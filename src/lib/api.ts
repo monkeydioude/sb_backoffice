@@ -9,15 +9,15 @@
  * - Remplacer `getAllOrganizations()` par `fetch('/api/organizations').then(r => r.json())`
  */
 
-import { Organization, User } from "@/types"
 import { SAMPLE_ORGANIZATIONS } from "@/lib/organizations-data"
 import { getAllUsers as getBaseUsers } from "@/lib/users-data"
+import { Organization, User } from "@/types"
 
 // ==========================================
 // 🔧 CONFIGURATION API
 // ==========================================
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api"
 
 // Mode développement : utiliser localStorage + données de base
 const USE_DEV_MODE = true // Mettre à false quand le backend est connecté

@@ -1,35 +1,29 @@
 "use client"
 
-import { useState } from "react"
-import { useParams } from "next/navigation"
 import { MainLayout } from "@/components/layout/main-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import {
-  Users,
-  Building2,
-  Mail,
-  Phone,
-  MapPin,
-  CheckCircle,
-  XCircle,
-  Clock,
-  ArrowLeft,
-  Edit,
-  CreditCard,
-  Activity,
-  LogIn,
-} from "lucide-react"
-import Link from "next/link"
-import { getPlanBadgeStyle } from "@/lib/plans"
-import { toast } from "sonner"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getFullName } from "@/types"
+import {
+    Activity,
+    ArrowLeft,
+    Building2,
+    CheckCircle,
+    Clock,
+    Edit,
+    LogIn,
+    Mail,
+    XCircle
+} from "lucide-react"
+import { useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { toast } from "sonner"
 
 // Données d'exemple pour un utilisateur
 const getUserData = (id: string) => {
@@ -94,7 +88,7 @@ export default function UserDetailPage() {
       <div className="container mx-auto px-6 py-8 space-y-6">
         {/* Header avec bouton retour */}
         <div className="flex items-center gap-4">
-          <Link href="/users">
+          <Link to="/users">
             <Button variant="outline" size="sm">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Retour
@@ -103,7 +97,7 @@ export default function UserDetailPage() {
           <div>
             <h1 className="text-3xl font-bold">Détails de l'utilisateur</h1>
             <p className="text-muted-foreground">
-              Informations complètes sur {getFullName(user)}
+              Informations complètes sur {getFullName(editedUser)}
             </p>
           </div>
         </div>
@@ -117,7 +111,7 @@ export default function UserDetailPage() {
                 <div className="flex items-center gap-4">
                   <Avatar className="w-20 h-20">
                     <AvatarFallback className="text-2xl">
-                      {user.firstName?.[0] || ""}{user.lastName?.[0] || ""}
+                      { editedUser.firstName?.[0] || ""}{editedUser.lastName?.[0] || ""}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
@@ -224,7 +218,7 @@ export default function UserDetailPage() {
                         <div>
                           <p className="font-medium">Dernière connexion</p>
                           <p className="text-sm text-muted-foreground">
-                            {user.lastLogin}
+                            {editedUser.lastLogin}
                           </p>
                         </div>
                         <Activity className="w-5 h-5 text-muted-foreground" />
@@ -316,12 +310,12 @@ export default function UserDetailPage() {
                 <div className="flex items-center gap-2 text-sm">
                   <Building2 className="w-4 h-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Entreprise:</span>
-                  <span className="font-medium">{user.company}</span>
+                  <span className="font-medium">{editedUser.company}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Building2 className="w-4 h-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Plan:</span>
-                  <span className="font-medium">{user.plan}</span>
+                  <span className="font-medium">{editedUser.plan}</span>
                 </div>
               </CardContent>
             </Card>

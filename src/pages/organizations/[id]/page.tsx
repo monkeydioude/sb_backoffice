@@ -1,54 +1,49 @@
 "use client"
 
-import { useState } from "react"
-import { useParams, useRouter } from "next/navigation"
 import { MainLayout } from "@/components/layout/main-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select"
 import {
-  Building2,
-  ArrowLeft,
-  Users,
-  Clock,
-  Activity,
-  TrendingUp,
-  LogIn,
-  LogOut,
-  MapPin,
-  Monitor,
-  CheckCircle,
-  XCircle,
-  Euro,
-  Calendar,
-  BarChart3,
-  Zap,
-  CreditCard,
-  DollarSign,
-} from "lucide-react"
-import Link from "next/link"
-import { Organization, LoginLog, UserActivity, EngagementStats, getFullName } from "@/types"
-import { formatPlan, getPlanBadgeStyle } from "@/lib/plans"
-import { getEnrichedUsersByOrganization, EnrichedUser } from "@/lib/users-data"
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getOrganizationById } from "@/lib/api"
+import { formatPlan, getPlanBadgeStyle } from "@/lib/plans"
+import { getEnrichedUsersByOrganization } from "@/lib/users-data"
+import { EngagementStats, getFullName, LoginLog, Organization, UserActivity } from "@/types"
+import {
+    Activity,
+    ArrowLeft,
+    Building2,
+    Calendar,
+    CheckCircle,
+    Clock,
+    CreditCard,
+    Euro,
+    LogIn,
+    LogOut,
+    MapPin,
+    Monitor,
+    Users,
+    XCircle,
+    Zap
+} from "lucide-react"
 import { useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 // Utilisateurs de l'organisation (utilise la source de données centralisée)
 
@@ -448,7 +443,7 @@ const getEngagementStats = (orgId: string): EngagementStats => {
 
 export default function OrganizationDetailPage() {
   const params = useParams()
-  const router = useRouter()
+  const navigate = useNavigate()
   const orgId = params.id as string
   const [logFilter, setLogFilter] = useState<string>("all")
   const [organization, setOrganization] = useState<Organization | null>(null)
@@ -493,7 +488,7 @@ export default function OrganizationDetailPage() {
           <Card>
             <CardContent className="p-6 text-center">
               <p className="text-muted-foreground">Organisation non trouvée</p>
-              <Button onClick={() => router.push("/organizations")} className="mt-4">
+              <Button onClick={() => navigate("/organizations")} className="mt-4">
                 Retour aux organisations
               </Button>
             </CardContent>
@@ -519,7 +514,7 @@ export default function OrganizationDetailPage() {
       <div className="container mx-auto px-6 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center gap-4">
-          <Link href="/organizations">
+          <Link to="/organizations">
             <Button variant="outline" size="sm">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Retour
